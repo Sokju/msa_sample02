@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: msa2-zuul-server
+  name: msa2-zuul-server
+spec:
+  ports:
+  - port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    run: msa2-zuul-server
+  type: ClusterIP
+  #type: ExternalName
+  #externalName: msa-zuul-server.msasmp01.svc.cluster.local
+
+

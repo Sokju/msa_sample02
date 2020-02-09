@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: msa2-svc-member
+  sleuth:
+    sampler:
+      probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
+  zipkin:
+    base-url: http://msa2-zipkin-server:9411 #ZipKin Server      
+    
+  data:
+    mongodb:
+      host: mongodb-standalone-0.mongodb
+      username: user
+      password: password
+      database: sample01
+      port: 27017
+    
+server:
+  port: 9091
+
+#turbine 수집을 위한 endpoint 활성화        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"     
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /member/api-docs        
