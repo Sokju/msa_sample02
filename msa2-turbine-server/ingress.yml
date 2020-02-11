@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: msa2-turbine-server
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: turbine2.msasmp02.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: msa-turbine-server
+          servicePort: 9010

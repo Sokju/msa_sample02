@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: msa2-zipkin-server
+  name: msa2-zipkin-server
+spec:
+  ports:
+  - port: 9411
+    protocol: TCP
+    targetPort: 9411
+  selector:
+    run: msa2-zipkin-server
+  type: ClusterIP
+

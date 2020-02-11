@@ -39,5 +39,6 @@
     	<module>msa2-svc-member</module>
     	<module>msa2-svc-order</module>
     	<module>msa2-zuul-server</module>
+    	<module>msa2-turbine-server</module>
     </modules>
 </project>

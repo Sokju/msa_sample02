@@ -1,0 +1,13 @@
+#Hystrix Turbine Server
+spring:
+  application:
+    name: msa2-turbine-server
+server:
+  port: 9010
+
+   
+turbine:
+  appConfig: msa2-svc-member,msa2-svc-order
+  clusterNameExpression: new String("default")      
+  
+ #Stream URL : http://msa-turbine-server:9010/turbine.stream

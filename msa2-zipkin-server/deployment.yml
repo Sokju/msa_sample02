@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  labels:
+    run: msa2-zipkin-server
+  name: msa2-zipkin-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: msa2-zipkin-server
+  template:
+    metadata:
+      labels:
+        run: msa2-zipkin-server
+    spec:
+      containers:
+      - image: 192.168.100.102:5000/msasmp02/msa2-zipkin-server:1.0
+        imagePullPolicy: Always
+        name: msa2-zipkin-server
+        ports:
+        - containerPort: 9411
+          protocol: TCP
+      restartPolicy: Always
+

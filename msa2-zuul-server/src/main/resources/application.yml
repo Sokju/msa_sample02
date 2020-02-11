@@ -6,7 +6,20 @@ spring:
       probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
   zipkin:
     base-url: http://msa2-zipkin-server:9411 #ZipKin Server      
-    
+
+  cloud:
+    kubernetes:
+#      config:
+#        enabled: true
+#      reload:
+#        enabled: true
+#        mode: polling
+#        strategy: RESTART_CONTEXT
+        
+      discovery:
+        all-namespaces: true
+        #enabled: false        
+              
 server:
   port: 9090
           
@@ -32,3 +45,10 @@ hystrix:
         thread:
           timeoutInMilliseconds: 600000      
       
+management:
+  endpoint:
+    restart:
+      enabled: true
+    routes:
+      enabled: false
+    
