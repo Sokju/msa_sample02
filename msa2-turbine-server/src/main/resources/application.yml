@@ -1,13 +1,32 @@
+server:
+  port: 9010
+
 #Hystrix Turbine Server
 spring:
   application:
     name: msa2-turbine-server
-server:
-  port: 9010
 
+  cloud:
+    stream:
+      bindings:
+        turbineStreamInput:
+          binder: rabbit2
+          destination: ddo
+          group: act
+      binders:
+        rabbit2:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq
+                port: 5672
+                username: guest
+                password: guest
    
-turbine:
-  appConfig: msa2-svc-member,msa2-svc-order
-  clusterNameExpression: new String("default")      
+#turbine:
+#  appConfig: msa2-svc-member,msa2-svc-order
+#  clusterNameExpression: new String("default")      
+#  ConfigPropertyBasedDiscovery.default.instances: localhost
   
  #Stream URL : http://msa-turbine-server:9010/turbine.stream

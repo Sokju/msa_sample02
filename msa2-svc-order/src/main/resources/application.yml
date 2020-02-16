@@ -5,7 +5,35 @@ spring:
     sampler:
       probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
   zipkin:
-    base-url: http://msa2-zipkin-server:9411 #ZipKin Server      
+    base-url: http://msa2-zipkin-server:9411 #ZipKin Server
+  cloud:
+    stream:
+      bindings:
+        hystrixStreamOutput:
+          destination: ddo
+          binder: rabbit1
+        orderMsgChannel:
+          destination: act
+          binder: rabbit2
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq
+                port: 5672
+                username: guest
+                password: guest
+        rabbit2:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq
+                port: 5673
+                username: guest
+                password: guest         
         
 server:
   port: 9092

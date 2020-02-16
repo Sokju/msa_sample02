@@ -3,9 +3,11 @@ package com.msa_sample02.svc.member.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.msa_sample02.svc.member.client.OrderSender;
 import com.msa_sample02.svc.member.domain.Member;
 import com.msa_sample02.svc.member.repository.MemberRepository;
 
@@ -19,7 +21,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberRepository repository;
-
+	
+	@Autowired
+	OrderSender orderServer;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -33,6 +38,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		member.setName(memberName);
 		//orderServiceClient.order(member.getName());
+		
+		orderServer.send(MessageBuilder.withPayload(member).build());
 		
 		return repository.findByName(memberName);
 	}

@@ -40,5 +40,6 @@
     	<module>msa2-svc-order</module>
     	<module>msa2-zuul-server</module>
     	<module>msa2-turbine-server</module>
+    	<module>msa2-eureka-server</module>
     </modules>
 </project>
