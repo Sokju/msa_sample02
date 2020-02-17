@@ -11,5 +11,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: msa-turbine-server
+          serviceName: msa2-turbine-server
           servicePort: 9010

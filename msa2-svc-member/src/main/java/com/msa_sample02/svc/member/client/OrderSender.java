@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 public class OrderSender {
 
     @Autowired
-    OrderMsgSource orderMsgSource;
+    OrderMsgBinding orderMsgBinding;
 
     public void send(String message) {
-    	orderMsgSource.orderMsg().send(message(message));
+    	orderMsgBinding.orderMsg().send(message(message));
     }
     
     public void send(Message msg) {
-    	orderMsgSource.orderMsg().send(msg);
+    	orderMsgBinding.orderMsg().send(msg);
     }
 
     private static final <T> Message<T> message(T val) {

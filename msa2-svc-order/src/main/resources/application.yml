@@ -5,8 +5,21 @@ spring:
     sampler:
       probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
   zipkin:
-    base-url: http://msa2-zipkin-server:9411 #ZipKin Server
+    base-url: http://msa2-zipkin-server:9411 #ZipKin Server      
+
   cloud:
+    kubernetes:
+#      config:
+#        enabled: true
+#      reload:
+#        enabled: true
+#        mode: polling
+#        strategy: RESTART_CONTEXT
+        
+      discovery:
+        all-namespaces: true
+        #enabled: false     
+
     stream:
       bindings:
         hystrixStreamOutput:
@@ -21,7 +34,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: rabbitmq
+                host: rabbitmq1
                 port: 5672
                 username: guest
                 password: guest
@@ -30,14 +43,14 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: rabbitmq
-                port: 5673
+                host: rabbitmq2
+                port: 5672
                 username: guest
                 password: guest         
         
 server:
   port: 9092
-
+  
 #turbine 수집을 위한 endpoint 활성화        
 management:
   endpoints:
