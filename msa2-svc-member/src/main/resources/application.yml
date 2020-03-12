@@ -1,3 +1,6 @@
+server:
+  port: 9091
+
 spring:
   application:
     name: msa2-svc-member
@@ -19,7 +22,9 @@ spring:
       discovery:
         all-namespaces: true
         #enabled: false   
-         
+      ribbon:
+        mode: SERVICE
+           
     stream:
       bindings:
         hystrixStreamOutput:
@@ -55,10 +60,6 @@ spring:
       database: sample01
       port: 27017
     
-server:
-  port: 9091
-
-
 #turbine 수집을 위한 endpoint 활성화        
 management:
   endpoints:
@@ -71,3 +72,8 @@ springfox:
     swagger:
       v2:
         path: /member/api-docs        
+
+ribbon:
+  http:
+    client:
+      enabled: true        

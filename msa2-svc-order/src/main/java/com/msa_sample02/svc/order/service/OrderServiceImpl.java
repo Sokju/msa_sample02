@@ -11,10 +11,6 @@ public class OrderServiceImpl implements OrderService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-//	public OrderServiceImpl(ICoffeeOrderRepository iCoffeeOrderRepository) {
-//		this.iCoffeeOrderRepository = iCoffeeOrderRepository;
-//	}
-	
 	@Override
 	public String order(OrderCVO orderCVO) {
 		

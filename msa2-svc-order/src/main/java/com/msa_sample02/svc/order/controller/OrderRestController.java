@@ -22,8 +22,6 @@ public class OrderRestController {
 	@Autowired
 	private OrderServiceImpl orderServiceImpl;
 	
-//	@Autowired
-//	private KafkaProducer kafkaProducer;
 	
 	@HystrixCommand
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
@@ -31,9 +29,7 @@ public class OrderRestController {
 //		
 //		//order
 //		orderServiceImpl.order(orderCVO);
-//
-//		//kafka
-//		//kafkaProducer.send("kafka-pub", orderCVO);
+
 //		
 //		return new ResponseEntity<OrderCVO>(orderCVO, HttpStatus.OK);
 //	}
@@ -43,8 +39,6 @@ public class OrderRestController {
 		//order
 		//orderServiceImpl.order(orderCVO);
 
-		//kafka
-		//kafkaProducer.send("kafka-pub", orderCVO);
 		
 	}
 }
