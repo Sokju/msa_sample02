@@ -6,7 +6,15 @@ metadata:
     run: msa2-zuul-server
   name: msa2-zuul-server
 spec:
-  replicas: 1
+  replicas: 2
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+#At most 10 pods (8 desired pods + 2 maxSurge pods) will be Ready during the update
+#At least 6 pods (8 desired pods - 2 maxUnavailable pods) will always be Ready during the update
+    rollingUpdate:
+      maxSurge: 1       #rolling update 중 정해진 Pod 수 이상으로 만들 수 있는 Pod의 최대 개수. 기본값은 25%
+      maxUnavailable: 0  #rolling update 중 unavailable(사용할수 없는) 상태인 Pod의 최대 개수. 기본값은 25%, 둘다 0이 될 수 없음
   selector:
     matchLabels:
       run: msa2-zuul-server
@@ -22,6 +30,20 @@ spec:
         ports:
         - containerPort: 9090
           protocol: TCP
+        volumeMounts:
+          - mountPath: /etc/localtime
+            name: timezone-config
+          - mountPath: /home
+            name: log-dir
+      volumes:
+      - hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
+        name: timezone-config
+      - hostPath:
+          path: /home
+        name: log-dir
       restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: worker1
 
 

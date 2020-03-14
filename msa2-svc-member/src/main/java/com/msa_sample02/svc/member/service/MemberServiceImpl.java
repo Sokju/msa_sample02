@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.msa_sample02.svc.member.client.OrderSender;
-import com.msa_sample02.svc.member.client.OrderServiceClient;
 import com.msa_sample02.svc.member.domain.Member;
 import com.msa_sample02.svc.member.repository.MemberRepository;
 
@@ -17,8 +16,8 @@ public class MemberServiceImpl implements MemberService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-	@Autowired
-	private OrderServiceClient orderServiceClient;
+	//@Autowired
+	//private OrderServiceClient orderServiceClient;
 
 	@Autowired
 	private MemberRepository repository;
@@ -38,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
 		log.debug("Member Name : {} ", memberName);
 		
 		member.setName(memberName);
-		orderServiceClient.order(member.getName());
+		//orderServiceClient.order(member.getName());
 		
 		orderServer.send(MessageBuilder.withPayload(member).build());
 		

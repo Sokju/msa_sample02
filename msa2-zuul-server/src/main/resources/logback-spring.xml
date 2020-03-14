@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    
+    <springProperty scope="context" name="springAppName" source="spring.application.name" defaultValue="localhost"/>
+
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss}:%-6relative|${springAppName:-%thread}|%-5level|%logger{35}|%msg%n"/>
+    <property name="MSG_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss}:%-6relative|%-5level|%msg%n"/>
+    <property name="LOG_FILE" value="/home/${springAppName}"/>
+    <property name="MSG_LOG_FILE" value="/home/${springAppName}.msg"/>
+    
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="DAILY_ROLLING_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- prudent>true</prudent-->
+        <file>${LOG_FILE}.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%i.log.%d{yyyyMMdd}</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>5MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="DAILY_ROLLING_MSG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- prudent>true</prudent-->
+        <file>${MSG_LOG_FILE}.log</file>
+        <encoder>
+            <pattern>${MSG_LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${MSG_LOG_FILE}.%i.log.%d{yyyyMMdd}</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>5MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <logger name="com.msa_sample02.zuul.server.filter" level="INFO">
+        <appender-ref ref="DAILY_ROLLING_MSG_APPENDER" />
+    </logger>
+    <logger name="com.msa_sample02" level="DEBUG">
+        <appender-ref ref="DAILY_ROLLING_LOG_APPENDER" />
+    </logger>
+    
+    <root level="INFO">
+        <appender-ref ref="DAILY_ROLLING_LOG_APPENDER" />
+    </root>
+</configuration>
