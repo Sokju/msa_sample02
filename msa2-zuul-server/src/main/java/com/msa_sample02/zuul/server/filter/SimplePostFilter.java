@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StreamUtils;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
@@ -54,10 +54,13 @@ public class SimplePostFilter extends ZuulFilter {
 	            return null;
 	        }
 	        
-	        ObjectNode node = new ObjectMapper().readValue(jsonData, ObjectNode.class);
+	        //ObjectNode jnode = new ObjectMapper().readValue(jsonData, ObjectNode.class);
+	        JsonNode tnode = new ObjectMapper().readTree(jsonData);
+	        JsonNode jnode = tnode.path("grid");
 	        
-	        if (node.has("name")) {
-	        	log.info(String.format("[R][%-6s]%s|%s", request.getMethod(), request.getRequestURL().toString(), node.get("name")));
+	        
+	        if (jnode.has("name")) {
+	        	log.info(String.format("[R][%-6s]%s|%s", request.getMethod(), request.getRequestURL().toString(), jnode.get("name")));
 	        } 
 	        else
 	        {
