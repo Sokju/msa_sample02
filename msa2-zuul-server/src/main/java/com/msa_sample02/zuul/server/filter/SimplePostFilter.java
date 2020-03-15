@@ -28,7 +28,7 @@ public class SimplePostFilter extends ZuulFilter {
 
 	@Override
 	public int filterOrder() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -41,41 +41,56 @@ public class SimplePostFilter extends ZuulFilter {
 		
 		RequestContext ctx = RequestContext.getCurrentContext();
 		HttpServletRequest request = ctx.getRequest();
-		String jsonData = null;
+		String jsonData	=	null;
+        String logType 	= 	"R";	//	Request 로그
+        String reqMethod= 	null;
+        String reqURL 	= 	null;
+        String keyWord 	= 	"name"; // 전문상 GUID 등이 필드 검색 Key
 		
 		try
 		{
 			
+			reqMethod 	= 	request.getMethod();
+        	reqURL   	=	request.getRequestURL().toString();
+        	
 			InputStream stream = ctx.getResponseDataStream();
 			jsonData = StreamUtils.copyToString(stream, Charset.forName("UTF-8"));
 	        
-	        if (jsonData == null) {
-	        	log.info(String.format("[R][%-6s]%s", request.getMethod(), request.getRequestURL().toString()));
-	            return null;
-	        }
-	        
-	        //ObjectNode jnode = new ObjectMapper().readValue(jsonData, ObjectNode.class);
+			if (jsonData == null) {
+            	log.debug(String.format("[%s][%-6s]%s|Message is null", logType, reqMethod, reqURL));
+                return null;
+            }
+            
+            if (jsonData.length() == 0) {
+            	log.debug(String.format("[%s][%-6s]%s|Message length is 0", logType, reqMethod, reqURL));
+                return null;
+            }
+            
+            //ObjectNode jnode = new ObjectMapper().readValue(jsonData, ObjectNode.class);
 	        JsonNode tnode = new ObjectMapper().readTree(jsonData);
-	        JsonNode jnode = tnode.path("grid");
+	        JsonNode jnode = null;
 	        
-	        
-	        if (jnode.has("name")) {
-	        	log.info(String.format("[R][%-6s]%s|%s", request.getMethod(), request.getRequestURL().toString(), jnode.get("name")));
+	        if (tnode != null && (jnode = tnode.path("grid1")).has(keyWord)) {
+	        	log.debug(String.format("[%s][%-6s]%s|%s", logType, reqMethod, reqURL, jnode.get(keyWord)));
 	        } 
 	        else
 	        {
-	        	log.info(String.format("[R][%-6s]%s|%s", request.getMethod(), request.getRequestURL().toString(), jsonData));
+	        	log.debug(String.format("[%s][%-6s]%s|%s", logType, reqMethod, reqURL, jsonData));
 	        }
-	        ctx.setResponseBody(jsonData);
-	        
 			//HttpServletResponse servletResponse = ctx.getResponse();
 			//servletResponse.addHeader("X-Sample", UUID.randomUUID().toString());
 	        
 	        if (stream != null) stream.close();
 	        
 			
-		}catch (IOException e) {
+		}
+		catch (IOException e) 
+		{
             rethrowRuntimeException(e);
+        } 
+		finally 
+		{
+			ctx.setResponseBody(jsonData);
         }
 		
 		return null;

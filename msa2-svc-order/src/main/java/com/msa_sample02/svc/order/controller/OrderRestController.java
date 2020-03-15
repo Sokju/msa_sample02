@@ -24,7 +24,7 @@ public class OrderRestController {
 	
 	
 	@HystrixCommand
-	@RequestMapping(value = "/order", method = RequestMethod.POST)
+	@RequestMapping(value = "/v2/order", method = RequestMethod.POST)
 //	public ResponseEntity<OrderCVO> order(@RequestBody OrderCVO orderCVO) {
 //		
 //		//order

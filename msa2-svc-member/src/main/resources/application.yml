@@ -6,7 +6,7 @@ spring:
     name: msa2-svc-member
   sleuth:
     sampler:
-      probability: 1.0    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
+      probability: 0.1    #얼마나 많은 비율로 zipkin에 송신하는 transaction 비율(Default 0.1(10%), 설정 1.0(100%))
   zipkin:
     base-url: http://msa2-zipkin-server:9411 #ZipKin Server      
 
@@ -71,9 +71,15 @@ springfox:
   documentation:
     swagger:
       v2:
-        path: /member/api-docs        
+        path: /v2/member/api-docs        
 
 ribbon:
   http:
     client:
-      enabled: true        
+      enabled: true     
+    ServerListRefreshInterval: 5000
+      
+hystrix.command.BackendCall.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.BackendCallThread.coreSize: 5      
+
+   

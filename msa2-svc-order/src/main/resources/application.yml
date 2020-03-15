@@ -62,4 +62,4 @@ springfox:
   documentation:
     swagger:
       v2:
-        path: /order/api-docs        
+        path: /v2/order/api-docs        

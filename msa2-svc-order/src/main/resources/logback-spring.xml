@@ -30,7 +30,7 @@
         </rollingPolicy>
     </appender>
     
-    <logger name="com.msa_sample02" level="DEBUG">
+    <logger name="com.msa_sample02" level="DEBUG" additivity = "false">
         <appender-ref ref="SAMPLE" />
     </logger>
     <!-- logger name="com.msa_sample02" level="INFO">
