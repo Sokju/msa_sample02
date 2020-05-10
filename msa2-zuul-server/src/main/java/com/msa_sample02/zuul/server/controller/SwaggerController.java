@@ -18,31 +18,35 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
  * @author Alive
  *
  */
-@Profile("!prod")
-@Component
-@Primary
-@EnableAutoConfiguration
-public class SwaggerController implements SwaggerResourcesProvider {
+//@Profile("!prod")
+//@Component
+//@Primary
+//@EnableAutoConfiguration
+//public class SwaggerController implements SwaggerResourcesProvider {
+//
+//
+//    private final RouteLocator routeLocator;
+//
+//    public SwaggerController(RouteLocator routeLocator) {
+//        this.routeLocator = routeLocator;
+//    }
+//
+//    @Override
+//    public List get() {
+//        List<SwaggerResource> resources = routeLocator.getRoutes().stream().distinct().map(route -> {
+//            SwaggerResource swaggerResource = new SwaggerResource();
+//            swaggerResource.setName(route.getLocation());
+//            swaggerResource.setLocation(route.getFullPath().replace("**", "api-docs"));
+//            swaggerResource.setSwaggerVersion(DocumentationType.SWAGGER_2.getVersion());
+//
+//            return swaggerResource;
+//
+//        }).collect(Collectors.toList());
+//
+//        return resources;
+//    }
+//}
 
-
-    private final RouteLocator routeLocator;
-
-    public SwaggerController(RouteLocator routeLocator) {
-        this.routeLocator = routeLocator;
-    }
-
-    @Override
-    public List get() {
-        List<SwaggerResource> resources = routeLocator.getRoutes().stream().distinct().map(route -> {
-            SwaggerResource swaggerResource = new SwaggerResource();
-            swaggerResource.setName(route.getLocation());
-            swaggerResource.setLocation(route.getFullPath().replace("**", "api-docs"));
-            swaggerResource.setSwaggerVersion(DocumentationType.SWAGGER_2.getVersion());
-
-            return swaggerResource;
-
-        }).collect(Collectors.toList());
-
-        return resources;
-    }
+public class SwaggerController {
+	
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.StreamUtils;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -36,7 +37,7 @@ public class SimplePreFilter extends ZuulFilter {
 
 	@Override
 	public boolean shouldFilter() {
-		return true;
+		return false;
 	}
 
 	@Override

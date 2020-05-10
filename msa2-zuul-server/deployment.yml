@@ -6,7 +6,7 @@ metadata:
     run: msa2-zuul-server
   name: msa2-zuul-server
 spec:
-  replicas: 2
+  replicas: 1
   minReadySeconds: 10
   strategy:
     type: RollingUpdate
