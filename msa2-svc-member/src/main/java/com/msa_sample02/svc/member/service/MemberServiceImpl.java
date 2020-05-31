@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 	public Member findByName(String memberName) {
 		Assert.hasLength(memberName, "memberName is null");
 		
-		Member member = new Member("","","");
+		Member member = new Member();
 		
 		log.debug("Member Name : {} ", memberName);
 		

@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: msa2-zuul-server
 data:
-  application.properties: |-
+  application-dev.properties: |-
     zuul.routes.msa2-svc-member.path=/v2/member/**
     zuul.routes.msa2-svc-member.serviceId=msa2-svc-member
     zuul.routes.msa2-svc-member.stripPrefix=false  

@@ -1,0 +1,48 @@
+server:
+  port: 9090
+  
+spring:  
+  application:
+    name: msa2-zuul-server
+  cloud:
+    kubernetes:
+      config:
+        enabled: true
+      reload:
+        enabled: true
+        mode: polling
+        strategy: refresh
+      discovery:
+        all-namespaces: true
+        #enabled: false        
+          
+#Zuul Routing    
+zuul:
+  ignored-service: "*"            #zuul의 라우팅 목록을 제외하고는 ignore
+  #prefix: /api                   #Zuul에 의해 routing 되는 모든 service의 Endpoint를 /api/~ 로 조합
+#  routes:
+#    msa2-svc-member:               #routing id
+#      path: /v2/member/**            #zuul context root
+#      serviceId: msa2-svc-member   #spring application name
+#      stripPrefix: false  
+#
+#    msa2-svc-order: 
+#      path: /v2/order/**  
+#      serviceId: msa2-svc-order   
+#      stripPrefix: false  
+
+hystrix:
+  command:
+    member:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 600000      
+      
+management:
+  security:
+    enabled: false
+    endpoint:
+      web:
+        exposure:
+          include: '*'
+    

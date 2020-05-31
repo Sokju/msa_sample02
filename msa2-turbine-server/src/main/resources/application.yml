@@ -23,19 +23,8 @@ spring:
                 port: 5672
                 username: guest
                 password: guest
-
-#Eureka Client   
-eureka:
-  instance:
-    prefer-ip-address: false         #HostName이 IP 에 의존하여 설정
-  client:
-    registerWithEureka: true       #자체 서비스를 eureka 서버에 등록 할지 여부
-    fetchRegistry: true            #client 서비스가 eureka 서버로 부터 서비스 리스트 정보를 local에 caching 할지 여부
-    region: default
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: http://msa2-eureka-server:8761/eureka/                
-   
+              
+  
 turbine:
   appConfig: msa2-svc-member,msa2-svc-order
   clusterNameExpression: new String("default")      
