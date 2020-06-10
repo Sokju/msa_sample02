@@ -1,0 +1,7 @@
+server:
+  port: 9011
+
+#Hystrix Dashboard Server
+spring:
+  application:
+    name: msa2-dashboard-server

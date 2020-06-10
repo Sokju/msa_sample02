@@ -16,17 +16,12 @@ data:
     
       cloud:
         kubernetes:
-    #      config:
-    #        enabled: true
-    #      reload:
-    #        enabled: true
-    #        mode: polling
-    #        strategy: RESTART_CONTEXT
-            
           discovery:
             all-namespaces: true
             #enabled: false     
-    
+          ribbon:
+            mode: SERVICE
+                
         stream:
           bindings:
             hystrixStreamOutput:

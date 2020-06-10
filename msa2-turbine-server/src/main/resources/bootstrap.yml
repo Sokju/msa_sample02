@@ -10,11 +10,11 @@ spring:
     stream:
       bindings:
         turbineStreamInput:
-          binder: rabbit2
+          binder: rabbit1
           destination: ddo
           group: act
       binders:
-        rabbit2:
+        rabbit1:
           type: rabbit
           environment:
             spring:
@@ -26,8 +26,18 @@ spring:
               
   
 turbine:
-  appConfig: msa2-svc-member,msa2-svc-order
+  appConfig: msa2-svc-member,msa2-svc-order,msa2-zuul-server
   clusterNameExpression: new String("default")      
 #  ConfigPropertyBasedDiscovery.default.instances: localhost
   
  #Stream URL : http://msa-turbine-server:9010/turbine.stream
+
+eureka:
+  client:
+    enabled: false
+    registerWithEureka: false       #자체 서비스를 eureka 서버에 등록 할지 여부
+    fetchRegistry: false            #client 서비스가 eureka 서버로 부터 서비스 리스트 정보를 local에 caching 할지 여부
+    
+ribbon:
+  eureka:
+    enabled: false

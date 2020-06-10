@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: msa2-dashboard-server
+  name: msa2-dashboard-server
+spec:
+  ports:
+  - port: 9011
+    protocol: TCP
+    targetPort: 9011
+  selector:
+    run: msa2-dashboard-server
+  type: ClusterIP
+

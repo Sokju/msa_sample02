@@ -12,9 +12,23 @@ spring:
         enabled: true
         mode: event
         strategy: refresh
-      discovery:
-        serviceLabels:
-          spring-boot: true
+      ribbon:
+        mode: SERVICE        
+    stream:
+      bindings:
+        hystrixStreamOutput:
+          destination: ddo
+          binder: rabbit1
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq1
+                port: 5672
+                username: guest
+                password: guest 
 
 ###############################        
 ## Zuul Routing    
@@ -76,8 +90,6 @@ hystrix:
 ribbon:
   ConnectTimeout: 1000                    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
   ReadTimeout: 10000                      # Connection 맺은 후 response 받기 까지 delay time
-  eureka:
-    enabled: false
 
 #turbine 수집을 위한 endpoint 활성화  
 management:
@@ -95,9 +107,4 @@ management:
     web:
       exposure:
         include: ["health", "hystrix.stream", "refresh"]         
-#  endpoints:
-#    enabled-by-default: false
-#    web:
-#      exposure:
-#        include: ["health", "hystrix.stream"]      
             
