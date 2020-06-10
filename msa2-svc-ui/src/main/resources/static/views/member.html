@@ -1,0 +1,37 @@
+<div>
+	<h1>Member Summary</h1>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr class="success">
+                <th>Member Name</th>
+                <th>Comment</th>
+                <th>Email Address</th>
+            </tr>
+            <tr data-ng-repeat="member in memberDataArray">
+                <td> <a href="" id="{{member.name}}" 
+                        data-ng-click="memberController.getMemberByName(member.name)">{{member.name}}</a></td>
+                <td><span>{{member.comment}}</span></td>
+                <td><span>{{member.email}}</span></td>
+            </tr>
+        </table>
+    </div>
+    
+	<div data-ng-show="memberData">
+        <h1>Member Details</h1>
+        
+        <table class="table table-striped">
+            <tr class="info">
+                <th>Member Name</th>
+                <th>Comment</th>
+                <th>Email Address</th>
+            </tr>
+            <tr>
+                <td><span>{{memberData.name}}</span></td>
+                <td><span>{{memberData.comment}}</span></td>
+                <td><span>{{memberData.email}}</span></td>
+            </tr>
+        </table>
+	</div>
+    
+</div>

@@ -1,0 +1,26 @@
+<div>
+    <h1>Task Summary</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr class="success">
+                <th>ID</th>
+                <th>Description</th>
+                <th>Completed</th>
+            </tr>
+            <tr data-ng-repeat="order in orderDataArray">
+                <td> <a href="" id="{{order.orderId}}" data-ng-click="orderController.getorderDataByorderId(order.orderId)">{{order.orderId}}</a></td>
+                <td><span>{{order.description}}</span></td>
+                <td><span>{{order.completed}}</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div data-ng-show="orderData">
+        <!-- The task details are rentered through a different view -->
+        <task-details></task-details>
+        <!-- The view for comments is moved to a different directive-->
+        <order-comments comments="orderData.comments.orderComments"></order-comments>
+    </div>
+
+</div>

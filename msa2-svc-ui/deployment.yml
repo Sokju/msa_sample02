@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  generation: 1
+  labels:
+    run: msa2-svc-ui
+  name: msa2-svc-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: msa2-svc-ui
+  template:
+    metadata:
+      labels:
+        run: msa2-svc-ui
+    spec:
+      containers:
+      - image: 192.168.100.102:5000/msasmp02/msa2-svc-ui:1.0
+        imagePullPolicy: Always
+        name: msa2-svc-ui
+        ports:
+        - containerPort: 9093
+          protocol: TCP
+        readinessProbe:
+          httpGet:                #probe type : exec(bash실행으로 체크 : ex 파일 유무체크), tcpSocket(TCP 특정포트 연결체크), httpGet(HTTP Get Request 점검)
+            path: /actuator/health
+            port: 9093            
+          initialDelaySeconds: 60 #컨테이너 생성 후 probe 초기화하기 전 대기 시간(초)
+          periodSeconds: 10       #probe 실행 주기(Default : 10초, 최소 1초)
+          timeoutSeconds: 3       #probe Timeout 대기 시간(Default : 1초, 최소 1초)
+          failureThreshold: 3     #실패 판단까지의 시도 회수(Default : 3회)
+          successThreshold: 1     #실행 후 성공 판단까지의 시도 회수(Default : 1회)
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 9093
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+          successThreshold: 1           
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: msa2-svc-ui
+  name: msa2-svc-ui
+spec:
+  ports:
+  - port: 9093
+    protocol: TCP
+    targetPort: 9093
+  selector:
+    run: msa2-svc-ui
+  type: ClusterIP
+
+---
+
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: msa2-svc-ui
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: frontend.msasmp02.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: msa2-svc-ui
+          servicePort: 9093
+          

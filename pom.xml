@@ -41,5 +41,6 @@
     	<module>msa2-zuul-server</module>
     	<module>msa2-turbine-server</module>
     	<module>msa2-dashboard-server</module>
+    	<module>msa2-svc-ui</module>
     </modules>
 </project>
