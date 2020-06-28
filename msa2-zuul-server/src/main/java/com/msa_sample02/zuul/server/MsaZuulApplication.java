@@ -13,8 +13,8 @@ import com.msa_sample02.zuul.server.filter.SimplePreFilter;
 import com.msa_sample02.zuul.server.filter.SimpleRouteFilter;
 
 @EnableZuulProxy
-@EnableHystrix
 @EnableDiscoveryClient
+@EnableHystrix
 @SpringBootApplication
 public class MsaZuulApplication {
 
@@ -41,6 +41,19 @@ public class MsaZuulApplication {
     public SimpleRouteFilter routeFilter() {
         return new SimpleRouteFilter();
     }
+    
+    /*	CORS 설정 백업 코드
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/path-1/**")
+                        .allowedOrigins("https://allowed-origin.com")
+                        .allowedMethods("GET", "POST");
+            }
+        };
+    }
+    */
     
     /*
     @Bean

@@ -12,8 +12,6 @@ spring:
         enabled: true
         mode: event
         strategy: refresh
-      ribbon:
-        mode: SERVICE        
     stream:
       bindings:
         hystrixStreamOutput:
@@ -85,9 +83,13 @@ hystrix:
   threadpool:
     default:
       coreSize: 10                        # Thread 를 이용할 경우 core size를 지정하는 속성(default : 10)
-      maximumSize: 10                     # Prior to 1.5.9, core and maximum sizes were always equal.
+      maximumSize: 20                     # Prior to 1.5.9, core and maximum sizes were always equal.
+      allowMaximumSizeToDivergeFromCoreSize: true # will return threads to the system during periods of relative inactivity
+      keepAliveTimeMinutes: 1             # how long a thread will go unused before being released
           
 ribbon:
+  eureka:
+    enabled: false
   ConnectTimeout: 1000                    # Client에서 서버로 요청시 서버와의 Connection 맺기 까지의 delay time
   ReadTimeout: 10000                      # Connection 맺은 후 response 받기 까지 delay time
 
